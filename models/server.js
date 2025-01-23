@@ -27,7 +27,21 @@ class Server {
         this.server = http.createServer( this.app );
 
         // Configuraciones de sockets
-        this.io = socketio( this.server, { cors: { origin: "*" } } );
+        //this.io = socketio( this.server, { cors: { origin: "*" } } );
+this.io = socketio(this.server, {
+  cors: {
+    origin: "https://swdiagramador.vercel.app/p",
+    methods: ["GET", "POST"],
+    credentials: true,
+    transports: ['websocket', 'polling']
+  }
+});
+
+// En middlewares()
+this.app.use(cors({
+  origin: "https://swdiagramador.vercel.app/",
+  credentials: true
+}));
 
         // Inicializar sockets
         //this.sockets = new Sockets( this.io );
